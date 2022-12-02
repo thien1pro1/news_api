@@ -34,7 +34,7 @@
                 </a>
             </li>
             <li>
-                <a href="./notifications.html">
+                <a href="{{route('post.index')}}">
                     <i class="nc-icon nc-bell-55"></i>
                     <p>Bài viết</p>
                 </a>

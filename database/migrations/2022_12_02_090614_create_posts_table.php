@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             
             $table->string('description')->nullable();
             $table->string('content');
+            $table->string('image');
             $table->integer('views')->default(0);
             $table->integer('status')->default(0);
             $table->integer('user_id');

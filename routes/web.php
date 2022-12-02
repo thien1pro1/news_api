@@ -29,6 +29,8 @@ Route::resource('/dashboard',PostController::class);
 Route::resource('/category',CategoryController::class);
 Route::resource('/dashboard',CommentController::class);
 Route::resource('/account',AccountController::class);
+Route::resource('/post',PostController::class);
+
 // Route::get('/client',PageController::class, 'index')->name('cc');
 
 Route::get('/admin/404-not-found', [\App\Http\Controllers\HomeController::class, 'notFound'])->name('admin.notFound');

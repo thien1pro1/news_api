@@ -25,7 +25,7 @@ Author URL: http://w3layouts.com
             <nav class="navbar navbar-expand-lg stroke px-0 pt-lg-0">
                 <h1>
                     <a class="navbar-brand" href="index.html">
-                        Passion<span class="logo-sub">Kraft</a>
+                        News<span class="logo-sub">new</a>
                 </h1>
                 <!-- if logo is image enable this   
     <a class="navbar-brand" href="#index.html">
