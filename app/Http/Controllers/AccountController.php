@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -39,8 +40,9 @@ class AccountController extends Controller
         $new_user = new User();
         $new_user->name = $request->name;
         $new_user->email = $request->email;
-        $new_user->role = 1;
-        $new_user->status = $request->status;
+        $new_user->role = $request->role;
+        $new_user->password = Hash::make($request->password);
+        $new_user->status = 1;
         $new_user->save();
         return redirect('/admin/index')->with('status','Thêm tài khoản thành công ');
     }
@@ -53,7 +55,7 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -64,6 +66,7 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
+
         $account = User::find($id);
         return view('admin.account.edit')->with(compact('account'));
     }
@@ -77,7 +80,13 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id)->update([
+            'name' =>$request->name,
+            'email' =>$request->email,
+            'role'  =>$request->role,
+        ]);
+
+        return redirect('/account')->with('status','Cập nhật tài khoản thành công ');
     }
 
     /**
