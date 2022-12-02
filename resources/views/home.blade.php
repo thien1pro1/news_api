@@ -50,15 +50,15 @@ Trang quản trị
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href="{{route('category.index')}}">
               <i class="nc-icon nc-pin-3"></i>
-              <p>Maps</p>
+              <p>Danh mục</p>
             </a>
           </li>
           <li>
             <a href="./notifications.html">
               <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
+              <p>Bài viết</p>
             </a>
           </li>
           <li>
@@ -118,7 +118,7 @@ Trang quản trị
                 </div>
               </div>
             </form>
-            
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
