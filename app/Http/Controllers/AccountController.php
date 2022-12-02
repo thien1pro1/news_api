@@ -13,8 +13,9 @@ class AccountController extends Controller
      */
     public function index()
     {
+        $accounts = User::all();
         
-        return view('admin.account.index');
+        return view('admin.account.index')->with(compact('accounts'));
     }
 
     /**
@@ -63,7 +64,8 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $account = User::find($id);
+        return view('admin.account.edit')->with(compact('account'));
     }
 
     /**
@@ -86,6 +88,7 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return redirect()->back()->with('status','Xóa tài khoản thành công');
     }
 }

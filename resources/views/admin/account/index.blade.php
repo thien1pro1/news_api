@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+
 <div class="col-md-12">
   <div class="card">
     <div class="card-header">
@@ -10,117 +11,81 @@
         <table class="table">
           <thead class=" text-primary">
             <th>
-              Name
+              STT
             </th>
             <th>
-              Country
+              Tên
             </th>
             <th>
-              City
+              email
             </th>
             <th class="text-right">
-              Salary
+              Loại tài khoản
+            </th>
+            <th>
+              Trạng thái
+            </th>
+            <th>
+              Quản lý
             </th>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                Dakota Rice
-              </td>
-              <td>
-                Niger
-              </td>
-              <td>
-                Oud-Turnhout
-              </td>
-              <td class="text-right">
-                $36,738
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Minerva Hooper
-              </td>
-              <td>
-                Curaçao
-              </td>
-              <td>
-                Sinaai-Waas
-              </td>
-              <td class="text-right">
-                $23,789
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Sage Rodriguez
-              </td>
-              <td>
-                Netherlands
-              </td>
-              <td>
-                Baileux
-              </td>
-              <td class="text-right">
-                $56,142
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Philip Chaney
-              </td>
-              <td>
-                Korea, South
-              </td>
-              <td>
-                Overland Park
-              </td>
-              <td class="text-right">
-                $38,735
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Doris Greene
-              </td>
-              <td>
-                Malawi
-              </td>
-              <td>
-                Feldkirchen in Kärnten
-              </td>
-              <td class="text-right">
-                $63,542
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mason Porter
-              </td>
-              <td>
-                Chile
-              </td>
-              <td>
-                Gloucester
-              </td>
-              <td class="text-right">
-                $78,615
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jon Porter
-              </td>
-              <td>
-                Portugal
-              </td>
-              <td>
-                Gloucester
-              </td>
-              <td class="text-right">
-                $98,615
-              </td>
-            </tr>
+            @php
+use App\Http\Constants\Status;
+use App\Http\Constants\TypeAccount;
+@endphp
+            @foreach($accounts as $key => $account)
+              <tr>
+                <td>
+                  {{$key}}
+                </td>
+                <td>
+                  {{$account->name}}
+                </td>
+                <td>
+                  {{$account->email}}
+                </td>
+                <td>
+                  <select>
+                    
+                      @if($account->role == TypeAccount::$ADMIN)
+                        <option selected value="{{TypeAccount::$ADMIN}}">Admin</option>
+                        <option value="{{TypeAccount::$CUSTOMER}}">Người dùng</option>
+                        <option value="{{TypeAccount::$AUTHOR}}">Tác giả</option>
+                      @elseif ($account->role == TypeAccount::$CUSTOMER)
+                        <option value="{{TypeAccount::$ADMIN}}">Admin</option>
+                        <option selected value="{{TypeAccount::$CUSTOMER}}">Người dùng</option>
+                        <option value="{{TypeAccount::$AUTHOR}}">Tác giả</option>
+
+                      @else
+                        <option value="{{TypeAccount::$ADMIN}}">Admin</option>
+                        <option value="{{TypeAccount::$CUSTOMER}}">Người dùng</option>
+                        <option selected  value="{{TypeAccount::$AUTHOR}}">Tác giả</option>
+
+                      @endif
+                    
+                  </select>
+                </td>
+                <td>
+                  
+                    @if($account->status == Status::$DEACTIVATE)
+                    <button type="button" class="btb btn-danger">Đã vô hiệu</button>
+                    @elseif($account->status == Status::$ACTIVE)
+                    <button type="button" class="btb btn-success">Đã kích hoạt</button>
+                    @endif
+                  
+                </td>
+                <td>
+                  <a href="{{route('account.edit',[$account->id])}}" class="btn btn-primary">Sửa</a>
+                  <form action="{{route('account.destroy',[$account->id])}}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button onclick="return confirm('Bạn muốn xóa người dùng {{$account->name}}?')" class="btn btn-danger">Xóa</button>
+                    
+                  </form>
+                </td>
+              </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
