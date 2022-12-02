@@ -1,4 +1,6 @@
-@extends('home')
+@extends("admin.layouts.main")
+
+
 @section('content')
 @php
 use App\Http\Constants\Status;
@@ -26,16 +28,16 @@ use App\Http\Constants\TypeAccount;
                 <div class="alert alert-success" role="alert">
                     {{session('status')}}
                 </div>
-                
+
             @endif
-        
-        
+
+
             <form method="POST" action="{{route('account.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" value="{{old('email')}}" name="email">
-                  
+
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Tên</label>
@@ -51,14 +53,14 @@ use App\Http\Constants\TypeAccount;
                         <option value="{{TypeAccount::$CUSTOMER}}">Độc giả</option>
                         <option value="{{TypeAccount::$AUTHOR}}">Tác giả</option>
                       </select>
-                      
+
                   </div>
                   <div class="form-group">
                     <label for="title">Hình ảnh</label>
                     <input type="file"class="form-control" name="image">
-                    
+
                   </div>
-        
+
                 <button type="submit" name="addStaff" class="btn btn-primary">Thêm</button>
               </form>
         </div>

@@ -22,4 +22,8 @@ class Category extends Model
         }
         return "Ngưng kích hoạt";
     }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 }

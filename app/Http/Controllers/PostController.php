@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Constants\Status;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -22,9 +23,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $all_post = Post::all();
-
- 
         $posts = Post::get();
         $categories = Category::all();
         return view('admin.post.index')->with(compact('posts','categories'));
@@ -37,10 +35,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        // $user = Auth::user();    
+        // $user = Auth::user();
         $categories = Category::all();
         return view('admin.post.create')->with(compact('categories'));
-   
+
     }
 
     /**
@@ -51,10 +49,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-        $post = new Post(); 
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'category_id' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif'
+        ]);
+        $post = new Post();
         $post->name = $request->name;
-        $post->views = $request->views;
+        $post->views = 0;
         $post->description = $request->description;
         $post->content = $request->content;
         $post->category_id = $request->category_id;
@@ -71,8 +75,8 @@ class PostController extends Controller
             $post->image = 'default.jpg';
         }
         $post->save();
-        return redirect()->back()->with('status','Thêm danh mục thành công');
-        
+        return redirect()->back()->with('status','Thêm bài viết thành công');
+
     }
 
     /**
@@ -96,10 +100,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $edit = Post::find($id);
-        $category = Category::all();
-        return view('admin.post.edit')->with(compact('category','edit'));
+        $categories = Category::where('status', Status::$ACTIVE)->get();
+        return view('admin.post.edit', ['categories' => $categories, 'post' => $edit]);
     }
 
     /**
@@ -111,28 +115,34 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'category_id' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif'
+        ]);
         $data = $request->all();
         $post = Post::find($id);
         $post->name = $data['name'];
-        $post->views = $data['views'];
         $post->description = $data['description'];
         $post->content = $data['content'];
         $post->status = 1;
 
         if($request['image']){
-            unlink('uploads/'.$post->image);
+            Storage::delete('public/'.$post->image);
             $image = $request['image'];
             $ext = $image->getClientOriginalExtension();
 
             $name = time().'_'.$image->getClientOriginalName();
             Storage::disk('public')->put($name,File::get($image));
             $post->image = $name;
- 
+
         }
         $post->category_id = $request->category_id;
 
         $post->save();
-        return redirect()->back()->with('status','Cập nhập danh mục thành công');
+        return redirect()->back()->with('status','Cập nhập bài viết thành công');
     }
 
     /**
@@ -145,9 +155,8 @@ class PostController extends Controller
     {
         Post::find($id)->delete();
         return redirect()->back()->with('status','Xoá Bài viết thành công');
-
-
     }
+
     public function comeback(){
         return redirect('/admin/post');
 
