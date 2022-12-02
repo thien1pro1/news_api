@@ -27,4 +27,45 @@ class CategoryController extends Controller
     public function create(){
         return view("admin.categories.create");
     }
+
+    public function edit($categoryId){
+        $category = Category::where('id', $categoryId)->first();
+        if(isset($category)){
+            return view("admin.categories.edit", ['category'=> $category]);
+        }
+
+        return redirect()->route("admin.notFound");
+
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'status' => 'required|max:255',
+        ]);
+        $category = $request->all();
+
+        $newCat = new Category($category);
+        $newCat->save();
+
+        Session::flash('msg','Thêm mới danh mục thành công');
+        return view("admin.categories.create");
+    }
+
+    public function update(Request $request, $categoryId){
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'status' => 'required|max:255',
+        ]);
+
+        $category = Category::where('id', $categoryId)->first();
+        if(isset($category)){
+            $category->update($request->all());
+            Session::flash('msg','Cập nhật danh mục thành công');
+            return redirect()->back();
+        }
+        return redirect()->back();
+    }
 }

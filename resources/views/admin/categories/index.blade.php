@@ -10,7 +10,9 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Danh mục</h4>
-            <button class="btn btn-outline-primary" href="{{route('category.create')}}">Thêm mới</button>
+            <a href="{{route('category.create')}}">
+            <button class="btn btn-outline-primary">Thêm mới</button>
+        </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -23,7 +25,10 @@
                         Tên danh mục
                     </th>
                     <th>
-                        Ngày tạo
+                        Mô tả
+                    </th>
+                    <th>
+                        Trạng thái
                     </th>
                     <th class="text-right">
                         Hành động
@@ -44,10 +49,16 @@
                             {{$category->name}}
                         </td>
                         <td>
-                            {{$category->created_at}}
+                            {{$category->description}}
                         </td>
-                        <td class="text-right">
-                            <button class="btn btn-primary">Sửa</button>
+                        <td>
+                            {{$category->getStatus()}}
+                        </td>
+                        <td class="text-right d-flex" style="align-items: flex-start; justify-content: flex-end;">
+                            <a href="{{route('category.edit', ['category' => $category->id])}}"
+                                class="text-white">
+                            <button class="btn btn-primary mr-2">Sửa</button>
+                        </a>
                             <form action="{{route('category.destroy', ['category'=>$category->id])}}" method="post">
                                 @csrf
                                 @method("delete")

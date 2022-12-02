@@ -31,5 +31,5 @@ Route::resource('/dashboard',CommentController::class);
 Route::resource('/account',AccountController::class);
 // Route::get('/client',PageController::class, 'index')->name('cc');
 
-
+Route::get('/admin/404-not-found', [\App\Http\Controllers\HomeController::class, 'notFound'])->name('admin.notFound');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

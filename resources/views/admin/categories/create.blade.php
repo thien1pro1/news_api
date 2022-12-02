@@ -2,68 +2,45 @@
 
 
 @section("content")
-
-<div class="col-md-12">
+<div class="container">
+    <h2>Thêm danh mục</h2>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     @if(Session::has('msg'))
     <div class="alert alert-success"> {{ Session::get('msg') }}</div>
     @endif
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Danh mục</h4>
-            <button class="btn btn-outline-primary" href="{{route('category.create')}}">Thêm mới</button>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class=" text-primary">
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Tên danh mục
-                    </th>
-                    <th>
-                        Ngày tạo
-                    </th>
-                    <th class="text-right">
-                        Hành động
-                    </th>
-                    </thead>
-                    <tbody>
-                    @if ($categories->count() == 0)
-                    <tr>
-                        <td colspan="4" class="text-center">Trống dữ liệu</td>
-                    </tr>
-                    @endif
-                    @foreach ($categories as $key => $category)
-                    <tr>
-                        <td>
-                            {{$key + 1}}
-                        </td>
-                        <td>
-                            {{$category->name}}
-                        </td>
-                        <td>
-                            {{$category->created_at}}
-                        </td>
-                        <td class="text-right">
-                            <button class="btn btn-primary">Sửa</button>
-                            <form action="{{route('category.destroy', ['category'=>$category->id])}}" method="post">
-                                @csrf
-                                @method("delete")
-                                <button class="btn btn-primary">Xóa</button>
-                            </form>
 
-                        </td>
-                    </tr>
-                    @endforeach
+    <form method="POST" action="{{route('category.store')}}">
+        @csrf
+        <div class="form-group">
+          <label for="exampleInputEmail1">Tên danh mục</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" value="{{old('name')}}" name="name">
 
-                    </tbody>
-                </table>
-            </div>
         </div>
-    </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mô tả</label>
+          <input type="text" class="form-control" id="exampleInputPassword1" value="{{old('description')}}"  name="description" >
+        </div>
+        <div class="form-group">
+            <label for="status">Trạng thái</label>
+            <select id="status" class="custom-select" name="status">
+                <option value="1">kích hoạt</option>
+                <option value="0" >Không kích hoạt</option>
+
+              </select>
+
+          </div>
+
+        <button style="float: left;   min-width: 100px;    margin:5px;" type="submit" name="addCategogy" class="btn btn-primary">Thêm</button>
+      </form>
+
 </div>
-
 
 @endsection
