@@ -39,6 +39,7 @@
                     <p>Bài viết</p>
                 </a>
             </li>
+            {{--
             <li>
                 <a href="./user.html">
                     <i class="nc-icon nc-single-02"></i>
@@ -63,6 +64,7 @@
                     <p>Upgrade to PRO</p>
                 </a>
             </li>
+            --}}
         </ul>
     </div>
 </div>

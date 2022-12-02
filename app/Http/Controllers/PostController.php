@@ -22,9 +22,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $all_post = Post::all();
-
- 
         $posts = Post::get();
         $categories = Category::all();
         return view('admin.post.index')->with(compact('posts','categories'));
@@ -37,10 +34,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        // $user = Auth::user();    
+        // $user = Auth::user();
         $categories = Category::all();
         return view('admin.post.create')->with(compact('categories'));
-   
+
     }
 
     /**
@@ -51,10 +48,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-        $post = new Post(); 
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'category_id' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif'
+        ]);
+        $post = new Post();
         $post->name = $request->name;
-        $post->views = $request->views;
+        $post->views = 0;
         $post->description = $request->description;
         $post->content = $request->content;
         $post->category_id = $request->category_id;
@@ -71,8 +74,8 @@ class PostController extends Controller
             $post->image = 'default.jpg';
         }
         $post->save();
-        return redirect()->back()->with('status','Thêm danh mục thành công');
-        
+        return redirect()->back()->with('status','Thêm bài viết thành công');
+
     }
 
     /**
@@ -96,7 +99,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $edit = Post::find($id);
         $category = Category::all();
         return view('admin.post.edit')->with(compact('category','edit'));
@@ -127,7 +130,7 @@ class PostController extends Controller
             $name = time().'_'.$image->getClientOriginalName();
             Storage::disk('public')->put($name,File::get($image));
             $post->image = $name;
- 
+
         }
         $post->category_id = $request->category_id;
 

@@ -11,8 +11,8 @@
         <div class="card-header">
             <h4 class="card-title">Danh mục</h4>
             <a href="{{route('category.create')}}">
-            <button class="btn btn-outline-primary">Thêm mới</button>
-        </a>
+                <button class="btn btn-outline-primary">Thêm mới</button>
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -56,9 +56,9 @@
                         </td>
                         <td class="text-right d-flex" style="align-items: flex-start; justify-content: flex-end;">
                             <a href="{{route('category.edit', ['category' => $category->id])}}"
-                                class="text-white">
-                            <button class="btn btn-primary mr-2">Sửa</button>
-                        </a>
+                               class="text-white">
+                                <button class="btn btn-primary mr-2">Sửa</button>
+                            </a>
                             <form action="{{route('category.destroy', ['category'=>$category->id])}}" method="post">
                                 @csrf
                                 @method("delete")
