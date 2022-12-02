@@ -189,8 +189,9 @@ Trang quản trị
         </div>
       </nav>
       <!-- End Navbar -->
-
-
+      <div class="content">
+        @yield('content')
+      </div>
     </div>
   </div>
   <!--   Core JS Files   -->

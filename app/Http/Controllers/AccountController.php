@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -12,7 +13,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        dd('cc');
+        
         return view('admin.account.index');
     }
 
@@ -23,7 +24,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.account.create');
     }
 
     /**
@@ -34,7 +35,13 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $new_user = new User();
+        $new_user->name = $request->name;
+        $new_user->email = $request->email;
+        $new_user->role = 1;
+        $new_user->status = $request->status;
+        $new_user->save();
+        return redirect('/admin/index')->with('status','Thêm tài khoản thành công ');
     }
 
     /**
