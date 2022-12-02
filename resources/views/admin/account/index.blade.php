@@ -1,4 +1,6 @@
-@extends('home')
+@extends("admin.layouts.main")
+
+
 @section('content')
     <div class="col-md-12">
         <div class="card">
@@ -46,17 +48,17 @@
                                         {{ $account->email }}
                                     </td>
                                     <td>
-                                        
+
 
                                             @if ($account->role == TypeAccount::$ADMIN)
                                             <span >Quản trị viên</span>
                                             @elseif ($account->role == TypeAccount::$CUSTOMER)
                                                 <span >Độc giả</span>
                                             @else
-                                            <span >Tác giả</span> 
+                                            <span >Tác giả</span>
                                             @endif
 
-                                        
+
                                     </td>
                                     <td>
 
