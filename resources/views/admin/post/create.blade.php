@@ -55,6 +55,13 @@
             </select>
 
         </div>
+        <div class="form-group">
+            <label for="title">Trạng thái</label>
+            <select name="status" class="form-control">
+                <option value="1">Đăng bài</option>
+                <option value="0">Bản nháp</option>
+            </select>
+        </div>
 
 
         <input type="submit" name="themdanhmuc" class="btn btn-primary mt-2" value="Thêm bài viết">

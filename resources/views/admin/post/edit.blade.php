@@ -43,7 +43,7 @@
         <div class="form-group">
             <label for="title">Nội dung </label>
             <textarea name="content" id="ckeditor_desc" value="{{$post->content}}" placeholder="Nội dung..." rows="5" class="form-control"
-                      style="resize: none;"></textarea>
+                      style="resize: none;">{{$post->content}}</textarea>
         </div>
         <div class="form-group">
             <label for="title">Danh mục bài viết </label>
@@ -56,7 +56,13 @@
 
         </div>
 
-
+        <div class="form-group">
+            <label for="title">Trạng thái</label>
+            <select name="status" class="form-control">
+                <option value="1" @if(1 == $post->status) 'selected' @endif>Đăng bài</option>
+                <option value="0" @if(1 == $post->status) 'selected' @endif>Bản nháp</option>
+            </select>
+        </div>
         <input type="submit" name="themdanhmuc" class="btn btn-primary mt-2" value="Thêm bài viết">
 </div>
 </form>

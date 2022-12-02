@@ -54,7 +54,8 @@ class PostController extends Controller
             'description' => 'required|max:255',
             'content' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'mimes:jpeg,jpg,png,gif'
+            'image' => 'mimes:jpeg,jpg,png,gif',
+            'status'    => 'required'
         ]);
         $post = new Post();
         $post->name = $request->name;
@@ -63,6 +64,8 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->category_id = $request->category_id;
         $post->user_id = Auth::user()->id;
+        $post->status = $request->status;
+
         if($request['image']){
             $image = $request['image'];
             $ext = $image->getClientOriginalExtension();
@@ -120,14 +123,15 @@ class PostController extends Controller
             'description' => 'required|max:255',
             'content' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'mimes:jpeg,jpg,png,gif'
+            'image' => 'mimes:jpeg,jpg,png,gif',
+            'status'    => 'required'
         ]);
         $data = $request->all();
         $post = Post::find($id);
         $post->name = $data['name'];
         $post->description = $data['description'];
         $post->content = $data['content'];
-        $post->status = 1;
+        $post->status = $request->status;
 
         if($request['image']){
             Storage::delete('public/'.$post->image);
