@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Constants\Status;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -101,8 +102,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $edit = Post::find($id);
-        $category = Category::all();
-        return view('admin.post.edit')->with(compact('category','edit'));
+        $categories = Category::where('status', Status::$ACTIVE)->get();
+        return view('admin.post.edit', ['categories' => $categories, 'post' => $edit]);
     }
 
     /**
@@ -114,16 +115,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'content' => 'required|max:255',
+            'category_id' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif'
+        ]);
         $data = $request->all();
         $post = Post::find($id);
         $post->name = $data['name'];
-        $post->views = $data['views'];
         $post->description = $data['description'];
         $post->content = $data['content'];
         $post->status = 1;
 
         if($request['image']){
-            unlink('uploads/'.$post->image);
+            Storage::delete('public/'.$post->image);
             $image = $request['image'];
             $ext = $image->getClientOriginalExtension();
 
@@ -135,7 +142,7 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
 
         $post->save();
-        return redirect()->back()->with('status','Cập nhập danh mục thành công');
+        return redirect()->back()->with('status','Cập nhập bài viết thành công');
     }
 
     /**
@@ -148,9 +155,8 @@ class PostController extends Controller
     {
         Post::find($id)->delete();
         return redirect()->back()->with('status','Xoá Bài viết thành công');
-
-
     }
+
     public function comeback(){
         return redirect('/admin/post');
 

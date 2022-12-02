@@ -18,10 +18,16 @@
                     STT
                 </th>
                 <th>
+                   Hình ảnh
+                </th>
+                <th>
                     Tên bài viết
                 </th>
                 <th>
                     Mô tả
+                </th>
+                <th>
+                    Danh mục
                 </th>
                 <th>
                     Trạng thái
@@ -42,13 +48,19 @@
                         {{$key + 1}}
                     </td>
                     <td>
+                        <img src="{{asset('storage/' . $post->image)}}" alt="" style="height: 150px;width:150px;object-fit: cover;"/>
+                    </td>
+                    <td>
                         {{$post->name}}
                     </td>
                     <td>
                         {{$post->description}}
                     </td>
                     <td>
-                        {{$post->status}}
+                        {{$post->category->name}}
+                    </td>
+                    <td>
+                        {{$post->getStatus()}}
                     </td>
                     <td class="text-right d-flex" style="align-items: flex-start; justify-content: flex-end;">
                         <a href="{{route('post.edit', ['post' => $post->id])}}"

@@ -4,7 +4,7 @@
 @section("content")
 
 <div class="container">
-    <h2>Thêm bài đăng cc</h2>
+    <h2>Thêm bài đăng</h2>
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -26,13 +26,9 @@
         @csrf
         <div class="form-group">
             <label for="title">Tiêu đề bài viết</label>
-            <input type="text" placeholder="" class="form-control" name="name">
+            <input type="text" placeholder="" class="form-control" name="name" value="{{old('name')}}">
         </div>
 
-        <div class="form-group">
-            <!-- <label for="title">Lượt xem tháng</label>
-            <input type="text" placeholder="Thêm lượt xem tháng..." class="form-control" name="viewsm"> -->
-        </div>
         <div class="form-group">
             <label for="title">Hình ảnh</label>
             <input type="file" name="image" accept="image/png, image/gif, image/jpeg"
@@ -42,11 +38,11 @@
         <div class="form-group">
             <label for="title">Mô tả ngắn</label>
             <textarea name="description" id="ckeditor_shortdesc" placeholder="Mô tả ngắn..." rows="5"
-                      class="form-control" style="resize: none;"></textarea>
+                      class="form-control" style="resize: none;">{{old('description')}}</textarea>
         </div>
         <div class="form-group">
             <label for="title">Nội dung </label>
-            <textarea name="content" id="ckeditor_desc" placeholder="Nội dung..." rows="5" class="form-control"
+            <textarea name="content" id="ckeditor_desc" value="{{old('content')}}" placeholder="Nội dung..." rows="5" class="form-control"
                       style="resize: none;"></textarea>
         </div>
         <div class="form-group">
